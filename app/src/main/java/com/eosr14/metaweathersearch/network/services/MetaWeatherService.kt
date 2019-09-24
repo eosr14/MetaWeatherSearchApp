@@ -8,9 +8,9 @@ import retrofit2.http.*
 interface MetaWeatherService {
 
     @GET("/api/location/search")
-    fun requestLocationSearch(@Query("query") query : String) : Single<LocationSearch>
+    fun requestLocationSearch(@Query("query") query : String) : Single<List<LocationSearch>>
 
-    @GET("/api/location")
+    @GET("/api/location/{woeid}")
     fun requestLocation(@Path("woeid") woeId : Int) : Single<Location>
 
 }

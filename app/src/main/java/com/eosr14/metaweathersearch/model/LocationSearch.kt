@@ -13,5 +13,5 @@ data class LocationSearch(
     val woeId: Int = 0,
 
     @SerializedName("latt_long")
-    val lattLong: Double = 0.0
+    val lattLong: String = ""
 )

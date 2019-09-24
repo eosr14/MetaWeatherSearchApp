@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-    </data>
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="50dp"
-        android:background="@drawable/shape_item_list">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_local"
-            style="@style/WeatherTextHeader"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_item_text"
-            android:gravity="center"
-            android:text="로컬1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="1.5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:background="@drawable/shape_item_list"
+        android:minHeight="50dp">
 
         <View
             android:id="@+id/view_today_background"
@@ -31,7 +14,7 @@
             android:layout_height="0dp"
             android:background="@android:color/holo_orange_dark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="4.5"
+            app:layout_constraintHorizontal_weight="4"
             app:layout_constraintLeft_toRightOf="@id/textview_local"
             app:layout_constraintRight_toLeftOf="@id/view_tomorrow_background"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,10 +25,102 @@
             android:layout_height="0dp"
             android:background="@android:color/holo_red_dark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="4.5"
+            app:layout_constraintHorizontal_weight="4"
             app:layout_constraintLeft_toRightOf="@id/view_today_background"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_today_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="abcd"
+            app:layout_constraintBottom_toTopOf="@id/textview_today_temp_humidity"
+            app:layout_constraintLeft_toRightOf="@id/imageview_today_abbr"
+            app:layout_constraintRight_toRightOf="@id/view_today_background"
+            app:layout_constraintTop_toTopOf="@id/view_today_background" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_today_temp_humidity"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="1234"
+            app:layout_constraintBottom_toBottomOf="@id/view_today_background"
+            app:layout_constraintLeft_toRightOf="@id/imageview_today_abbr"
+            app:layout_constraintRight_toRightOf="@id/view_today_background"
+            app:layout_constraintTop_toBottomOf="@id/textview_today_name" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_local"
+            style="@style/WeatherTextHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_item_text"
+            android:gravity="center"
+            android:text="@{localWeather.local}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_tomorrow_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="dcef"
+            app:layout_constraintBottom_toTopOf="@id/textview_tomorrow_temp_humidity"
+            app:layout_constraintLeft_toRightOf="@id/imageview_tomorrow_abbr"
+            app:layout_constraintRight_toRightOf="@id/view_tomorrow_background"
+            app:layout_constraintTop_toTopOf="@id/view_tomorrow_background" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textview_tomorrow_temp_humidity"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="8984"
+            app:layout_constraintBottom_toBottomOf="@id/view_tomorrow_background"
+            app:layout_constraintLeft_toRightOf="@id/imageview_tomorrow_abbr"
+            app:layout_constraintRight_toRightOf="@id/view_tomorrow_background"
+            app:layout_constraintTop_toBottomOf="@id/textview_tomorrow_name" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imageview_today_abbr"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/view_today_background"
+            app:layout_constraintLeft_toLeftOf="@id/view_today_background"
+            app:layout_constraintTop_toTopOf="@id/view_today_background" />
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/imageview_tomorrow_abbr"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/view_tomorrow_background"
+            app:layout_constraintLeft_toLeftOf="@id/view_tomorrow_background"
+            app:layout_constraintTop_toTopOf="@id/view_tomorrow_background" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+        <variable
+            name="localWeather"
+            type="com.eosr14.metaweathersearch.model.LocalWeather" />
+    </data>
+
 </layout>

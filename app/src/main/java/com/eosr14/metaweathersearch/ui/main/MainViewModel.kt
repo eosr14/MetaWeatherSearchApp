@@ -20,12 +20,26 @@ class MainViewModel(
     private val _localWeathers = MutableLiveData<List<LocalWeather>>(mutableListOf())
     val localWeathers: LiveData<List<LocalWeather>> get() = _localWeathers
 
+    private val _isFullToRefresh = MutableLiveData<Boolean>(false)
+    val isFullToRefresh: LiveData<Boolean> get() = _isFullToRefresh
+
     init {
-        requestLocationSearch()
+        requestLocationSearch(false)
     }
 
-    private fun requestLocationSearch() {
-        progress.value = true
+    fun requestLocationSearch(fullToRefresh: Boolean) {
+        when (fullToRefresh) {
+            true -> {
+                progress.value = false
+                _isFullToRefresh.value = true
+            }
+            else -> {
+                progress.value = true
+                _isFullToRefresh.value = false
+            }
+        }
+
+        _localWeathers.value = mutableListOf()
 
         addDisposable(
             RetrofitManager.requestLocationSearch(SEARCH_TEXT)
@@ -35,6 +49,7 @@ class MainViewModel(
                     requestLocation(locationSearch)
                 }, {
                     progress.value = false
+                    _isFullToRefresh.value = false
                     mainViewModelInterface.showErrorToast()
                 })
         )
@@ -57,24 +72,29 @@ class MainViewModel(
                         when (i) {
                             0 -> {
                                 // Today
-                                localWeather.todayWeatherStateName = location.weatherList[i].weatherStateName
+                                localWeather.todayWeatherStateName =
+                                    location.weatherList[i].weatherStateName
                                 localWeather.todayWeatherStatAbbr = String.format(
                                     META_WEATHER_IMG_URL,
                                     location.weatherList[i].weatherStateAddr
                                 )
-                                localWeather.todayWeatherTheTemp = location.weatherList[i].theTemp.toString()
-                                localWeather.todayWeatherHumidity = location.weatherList[i].humidity.toString()
+                                localWeather.todayWeatherTheTemp =
+                                    location.weatherList[i].theTemp.toInt()
+                                localWeather.todayWeatherHumidity = location.weatherList[i].humidity
                             }
 
                             1 -> {
                                 // Tomorrow
-                                localWeather.tomorrowWeatherStateName = location.weatherList[i].weatherStateName
+                                localWeather.tomorrowWeatherStateName =
+                                    location.weatherList[i].weatherStateName
                                 localWeather.tomorrowWeatherStateAbbr = String.format(
                                     META_WEATHER_IMG_URL,
                                     location.weatherList[i].weatherStateAddr
                                 )
-                                localWeather.tomorrowWeatherTheTemp = location.weatherList[i].theTemp.toString()
-                                localWeather.tomorrowWeatherHumidity = location.weatherList[i].humidity.toString()
+                                localWeather.tomorrowWeatherTheTemp =
+                                    location.weatherList[i].theTemp.toInt()
+                                localWeather.tomorrowWeatherHumidity =
+                                    location.weatherList[i].humidity
                             }
                         }
                     }
@@ -83,14 +103,15 @@ class MainViewModel(
                     if (locations.size == localWeatherList.size) {
                         _localWeathers.value = localWeatherList
                         progress.value = false
+                        _isFullToRefresh.value = false
                     }
 
                 }, {
                     progress.value = false
+                    _isFullToRefresh.value = false
                     mainViewModelInterface.showErrorToast()
                 })
         )
     }
-
 
 }

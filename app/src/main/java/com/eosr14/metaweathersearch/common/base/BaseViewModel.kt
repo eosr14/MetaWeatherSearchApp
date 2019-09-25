@@ -10,7 +10,7 @@ open class BaseViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    protected val progress = MutableLiveData<Boolean>().apply { value = false }
+    protected val progress = MutableLiveData<Boolean>(false)
     val isProgress: LiveData<Boolean> get() = progress
 
     fun addDisposable(disposable: Disposable) {

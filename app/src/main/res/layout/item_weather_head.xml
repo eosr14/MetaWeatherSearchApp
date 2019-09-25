@@ -10,7 +10,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_local"
             style="@style/WeatherTextHeader"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_item_text"
             android:text="@string/main_weather_local"
@@ -47,4 +47,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <data>
+
+        <variable
+            name="localWeather"
+            type="com.eosr14.metaweathersearch.model.LocalWeather" />
+    </data>
+
 </layout>

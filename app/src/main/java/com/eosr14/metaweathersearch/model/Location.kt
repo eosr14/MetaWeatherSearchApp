@@ -6,7 +6,7 @@ data class Location(
     val title: String = "",
 
     @SerializedName("consolidated_weather")
-    val weatherList: List<ConsolidatedWeather> = listOf()
+    val weatherList: List<ConsolidatedWeather> = mutableListOf()
 ) {
 
     data class ConsolidatedWeather(

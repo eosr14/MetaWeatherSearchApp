@@ -11,6 +11,9 @@ import com.eosr14.metaweathersearch.R
 import com.eosr14.metaweathersearch.common.base.BaseActivity
 import com.eosr14.metaweathersearch.common.base.BaseRecyclerViewAdapter
 import com.eosr14.metaweathersearch.databinding.ActivityMainBinding
+import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), MainViewModelInterface {
@@ -34,22 +37,27 @@ class MainActivity : BaseActivity(), MainViewModelInterface {
 
     private fun bindView() {
         recyclerview_main.run {
-            layoutManager = LinearLayoutManager(context).apply { orientation = RecyclerView.VERTICAL }
-            adapter = MainListAdapter(object : BaseRecyclerViewAdapter.OnItemClickListener {
-                override fun onItemClick(view: View, position: Int, adapter: BaseRecyclerViewAdapter<*, *>) {
-                    Toast.makeText(context, "테스트 포지션 = $position", Toast.LENGTH_SHORT).show()
-                }
-            })
+            layoutManager =
+                LinearLayoutManager(context).apply { orientation = RecyclerView.VERTICAL }
+            adapter = MainListAdapter()
         }
 
         mainViewModel.isProgress.observe(this@MainActivity, Observer {
             it?.let { isProgress ->
                 when (isProgress) {
-                    true -> progressDialog.show()
-                    false -> progressDialog.cancel()
+                    true -> progressBar.show()
+                    false -> progressBar.hide()
                 }
             }
         })
+
+        mainViewModel.addDisposable(
+            RxSwipeRefreshLayout.refreshes(layout_main_swipe)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    mainViewModel.requestLocationSearch(true)
+                }
+        )
     }
 
     // [-- MainViewModelInterface

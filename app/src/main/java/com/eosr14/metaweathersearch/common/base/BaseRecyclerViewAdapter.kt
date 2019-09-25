@@ -8,18 +8,9 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> :
     protected var onItemClickListener: OnItemClickListener? = null
     private var listItems: MutableList<T> = mutableListOf()
     private var clickViewId: Int = View.NO_ID
+    private var withHeader: Boolean = false
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val clickView = getClickView(holder)
-        clickView.setOnClickListener {
-            preProcessOnItemClick(holder.layoutPosition)
-            onItemClickListener?.onItemClick(
-                holder.itemView,
-                holder.layoutPosition,
-                this@BaseRecyclerViewAdapter
-            )
-        }
-        preProcessOnBindView(holder, position)
         onBindView(holder as H, position)
     }
 
@@ -75,9 +66,9 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> :
         notifyItemInserted(listItems.size)
     }
 
-    protected open fun preProcessOnBindView(holder: RecyclerView.ViewHolder, position: Int) {}
-
-    protected open fun preProcessOnItemClick(position: Int) {}
+    fun setWithHeader(header: Boolean) {
+        withHeader = header
+    }
 
     protected abstract fun onBindView(holder: H, position: Int)
 
@@ -92,4 +83,12 @@ abstract class BaseRecyclerViewAdapter<T, H : RecyclerView.ViewHolder> :
             holder.itemView.findViewById(clickViewId) ?: throw Exception("ID is invalid")
         }
     }
+
+    enum class LIST_TYPE {
+        TYPE_HEADER,
+        TYPE_FOOTER,
+        TYPE_HEADER_FOOTER,
+        TYPE_NORMAL
+    }
+
 }

@@ -6,4 +6,5 @@
     <string name="main_weather_local">Local</string>
     <string name="main_weather_today">Today</string>
     <string name="main_weather_tomorrow">Tomorrow</string>
+    <string name="main_weather_temp_humidity">%d°C %d%%</string>
 </resources>

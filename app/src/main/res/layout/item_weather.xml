@@ -5,14 +5,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_item_list"
-        android:minHeight="50dp">
+        android:background="@drawable/shape_item">
 
         <View
             android:id="@+id/view_today_background"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/holo_orange_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_weight="4"
             app:layout_constraintLeft_toRightOf="@id/textview_local"
@@ -23,7 +21,7 @@
             android:id="@+id/view_tomorrow_background"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@android:color/holo_red_dark"
+            android:background="@drawable/shape_item_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_weight="4"
             app:layout_constraintLeft_toRightOf="@id/view_today_background"
@@ -34,10 +32,11 @@
             android:id="@+id/textview_today_name"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="abcd"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_marginBottom"
+            android:text="@{localWeather.todayWeatherStateName}"
             app:layout_constraintBottom_toTopOf="@id/textview_today_temp_humidity"
             app:layout_constraintLeft_toRightOf="@id/imageview_today_abbr"
             app:layout_constraintRight_toRightOf="@id/view_today_background"
@@ -47,9 +46,10 @@
             android:id="@+id/textview_today_temp_humidity"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="1234"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_margin"
+            android:text="@{@string/main_weather_temp_humidity(localWeather.todayWeatherTheTemp, localWeather.todayWeatherHumidity)}"
             app:layout_constraintBottom_toBottomOf="@id/view_today_background"
             app:layout_constraintLeft_toRightOf="@id/imageview_today_abbr"
             app:layout_constraintRight_toRightOf="@id/view_today_background"
@@ -58,8 +58,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_local"
             style="@style/WeatherTextHeader"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
             android:background="@drawable/shape_item_text"
             android:gravity="center"
             android:text="@{localWeather.local}"
@@ -72,10 +72,11 @@
             android:id="@+id/textview_tomorrow_name"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="dcef"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_marginBottom"
+            android:text="@{localWeather.tomorrowWeatherStateName}"
             app:layout_constraintBottom_toTopOf="@id/textview_tomorrow_temp_humidity"
             app:layout_constraintLeft_toRightOf="@id/imageview_tomorrow_abbr"
             app:layout_constraintRight_toRightOf="@id/view_tomorrow_background"
@@ -85,9 +86,10 @@
             android:id="@+id/textview_tomorrow_temp_humidity"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="8984"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_margin"
+            android:text="@{@string/main_weather_temp_humidity(localWeather.tomorrowWeatherTheTemp, localWeather.tomorrowWeatherHumidity)}"
             app:layout_constraintBottom_toBottomOf="@id/view_tomorrow_background"
             app:layout_constraintLeft_toRightOf="@id/imageview_tomorrow_abbr"
             app:layout_constraintRight_toRightOf="@id/view_tomorrow_background"
@@ -95,29 +97,36 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageview_today_abbr"
-            android:layout_width="45dp"
+            android:layout_width="@dimen/item_image_width"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_margin"
             app:layout_constraintBottom_toBottomOf="@id/view_today_background"
             app:layout_constraintLeft_toLeftOf="@id/view_today_background"
-            app:layout_constraintTop_toTopOf="@id/view_today_background" />
+            app:layout_constraintTop_toTopOf="@id/view_today_background"
+            app:urlToImage="@{localWeather.todayWeatherStatAbbr}" />
 
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageview_tomorrow_abbr"
-            android:layout_width="45dp"
+            android:layout_width="@dimen/item_image_width"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin"
+            android:layout_marginRight="@dimen/item_margin"
+            android:layout_marginBottom="@dimen/item_margin"
             app:layout_constraintBottom_toBottomOf="@id/view_tomorrow_background"
             app:layout_constraintLeft_toLeftOf="@id/view_tomorrow_background"
-            app:layout_constraintTop_toTopOf="@id/view_tomorrow_background" />
+            app:layout_constraintTop_toTopOf="@id/view_tomorrow_background"
+            app:urlToImage="@{localWeather.tomorrowWeatherStateAbbr}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <data>
+
         <variable
             name="localWeather"
             type="com.eosr14.metaweathersearch.model.LocalWeather" />
